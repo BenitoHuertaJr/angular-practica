@@ -1,0 +1,33 @@
+<div class="container">
+    <h1 class="heading">¡Bienvenido!<br><br></h1>
+    <p class="para">¡Identifícate para continuar!</p>
+    <form (ngSubmit)="login()" [formGroup]="credentials">
+        <div class="input-group">
+            <div class="ion-item">
+                <fieldset class="input-item" [ngClass]="{'input-item-error' : (email?.dirty || email?.touched) && email?.errors, 'input-item-success' : email?.valid }">
+                    <legend>Correo</legend>
+                    <input formControlName="email" type="email" placeholder="Escriba su correo">
+                    <div *ngIf="(email?.dirty || email?.touched) && email?.errors">
+                        <small *ngIf="email?.errors?.['required']">El campo correo es requerido</small>
+                        <small *ngIf="email?.errors?.['email']">El correo proporcionado no es válido</small>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="ion-item">
+                <fieldset class="input-item" [ngClass]="{'input-item-error' : (password?.dirty || password?.touched) && password?.errors, 'input-item-success' : password?.valid}">
+                    <legend>Contraseña</legend>
+                    <input formControlName="password" type="password" placeholder="Escriba su contraseña">
+                    <div *ngIf="(password?.dirty || password?.touched) && password?.errors" class="errors">
+                        <small *ngIf="password?.errors?.['required']">El campo contraseña es requerido</small>
+                        <small *ngIf="password?.errors?.['minlength']">La contraseña debe tener mínimo 6
+                            caracteres</small>
+                    </div>
+                </fieldset>
+            </div>
+            <p class="forget-text"><a (click)="presentModalForgotPassword()" color="primary">¿Olvidaste tu contraseña?</a></p>
+        </div>
+        <button type="submit" class="login-button" shape="round" size="large" [disabled]="!credentials.valid" expand="block">
+            Ingresar
+        </button>
+    </form>
+</div>
