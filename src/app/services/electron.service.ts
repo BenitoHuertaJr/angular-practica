@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BrowserWindow, IpcRenderer, MessageBoxOptions, dialog as ElectronDialog } from 'electron';
 import { ElectronService as NgxElectronService } from 'ngx-electron';
 import { of } from 'rxjs';
+import Swal, { SweetAlertOptions } from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -34,10 +35,15 @@ export class ElectronService {
 
   showMessageBox(options: MessageBoxOptions) {
 
-    this.send('showMessageBox', options);
-    this.on('showMessageBoxResult', (res: Electron.MessageBoxReturnValue) => {
-      console.log('result', res)
-    });
+    if (this.isElectronApp()) {
+      this.send('showMessageBox', options);
+    } else {
+      Swal.fire({
+        title: options.title,
+        text: options.message
+      });
+    }
+  
   }
 
   // showErrorBox(title: string, content: string): void {

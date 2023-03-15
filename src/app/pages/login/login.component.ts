@@ -10,7 +10,7 @@ import { ElectronService } from 'src/app/services/electron.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  credentials!: FormGroup;
+  loginForm!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -20,14 +20,14 @@ export class LoginComponent {
   ) {}
 
   ngOnInit() {
-    this.credentials = this.fb.group({
-      email: ['huertajosebenito@gmail.com', [Validators.required, Validators.email]],
+    this.loginForm = this.fb.group({
+      email: ['huertajosebenito@gmail.com', [Validators.required, Validators.email, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,63}$')]],
       password: ['aec34a1881', [Validators.required, Validators.minLength(6)]]
     });
   }
 
   login() {
-    this.authService.login(this.credentials.value).subscribe({
+    this.authService.login(this.loginForm.value).subscribe({
       next: (_res: any) => {
         this.electronService.send('maximize-main-window');
         this.router.navigateByUrl('/home', { replaceUrl: true });
@@ -40,10 +40,10 @@ export class LoginComponent {
   }
 
   get email() {
-    return this.credentials.get('email');
+    return this.loginForm.get('email');
   }
 
   get password() {
-    return this.credentials.get('password');
+    return this.loginForm.get('password');
   }
 }
