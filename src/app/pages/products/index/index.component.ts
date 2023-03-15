@@ -1,18 +1,20 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { HttpService } from '../../../services/http.service';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, Sort } from '@angular/material/sort';
+import { Router } from '@angular/router';
 import { PaginationParams } from 'src/app/interfaces/PaginationParams';
-import { User } from 'src/app/models/User';
-import { UserService } from 'src/app/services/user.service';
+import { Product } from 'src/app/models/Product';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss']
 })
-export class IndexComponent implements OnInit {
-
+export class IndexComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -27,18 +29,20 @@ export class IndexComponent implements OnInit {
 
   search: string = '';
 
-  displayedColumns: string[] = ['image_link', 'id', 'name', 'email', 'actions'];
-  dataSource: MatTableDataSource<User, MatPaginator> = new MatTableDataSource<User, MatPaginator>([]);
+  displayedColumns: string[] = ['image_link', 'name', 'price', 'bar_code', 'sub_category_name', 'actions'];
+  dataSource: MatTableDataSource<Product, MatPaginator> = new MatTableDataSource<Product, MatPaginator>([]);
 
   loading: boolean = false;
 
+  backButtonText: string = '';
+
   constructor(
-    private userService: UserService
+    private productService: ProductService
   ) { }
 
   ngOnInit() {
-    this.getUsers();
-    this.dataSource = new MatTableDataSource<User, MatPaginator>([]);
+    this.getProducts();
+    this.dataSource = new MatTableDataSource<Product, MatPaginator>([]);
   }
 
   ngAfterViewInit() {
@@ -46,7 +50,8 @@ export class IndexComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  getUsers() {
+  getProducts() {
+
     this.loading = true;
 
     let params: PaginationParams = {
@@ -62,7 +67,15 @@ export class IndexComponent implements OnInit {
       params.sort_direction = this.sortDirection;
     }
 
-    this.userService.all(params).subscribe({
+    if (this.search || this.search !== '') {
+      params.search = this.search;
+
+      if (!isNaN(Number(this.search)) && this.search.length > 10) {
+        params.search_by = 'bar_code';
+      }
+    }
+
+    this.productService.all(params).subscribe({
       next: (resp) => {
         this.dataSource = new MatTableDataSource(resp.data);
         this.paginator.length = resp.total;
@@ -76,7 +89,7 @@ export class IndexComponent implements OnInit {
   changePage(event: PageEvent) {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.getUsers();
+    this.getProducts();
   }
 
   announceSortChange(sortState: Sort) {
@@ -84,15 +97,22 @@ export class IndexComponent implements OnInit {
     this.sortBy = sortState.active;
     this.sortDirection = sortState.direction;
 
-    this.getUsers();
+    this.getProducts();
   }
 
-  refreshSales() {
+  clearSearchProducts() {
+    this.search = '';
+    this.getProducts();
+  }
+
+  refreshProducts() {
     this.pageIndex = 0;
     this.pageSize = 10;
+    this.search = '';
     this.sortBy = '';
     this.sortDirection = '';
 
-    this.getUsers();
+    this.getProducts();
   }
 }
+

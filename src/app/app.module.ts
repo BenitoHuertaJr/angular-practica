@@ -14,6 +14,7 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { ShowComponent } from './pages/users/show/show.component';
 import { EditComponent } from './pages/users/edit/edit.component';
 import { AngularMaterialModule } from './modules/angular-material/angular-material.module';
+import { IndexComponent } from './pages/products/index/index.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AngularMaterialModule } from './modules/angular-material/angular-materi
     UsersIndexComponent,
     UsersCreateComponent,
     ShowComponent,
-    EditComponent
+    EditComponent,
+    IndexComponent
   ],
   imports: [
     BrowserModule,

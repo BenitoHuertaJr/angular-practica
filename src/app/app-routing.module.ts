@@ -8,6 +8,7 @@ import { CreateComponent as UsersCreateComponent} from './pages/users/create/cre
 import { IndexComponent as UsersIndexComponent } from './pages/users/index/index.component';
 import { ShowComponent as UsersShowComponent } from './pages/users/show/show.component';
 import { EditComponent as UsersEditComponent } from './pages/users/edit/edit.component';
+import { IndexComponent as ProductsIndexComponent } from './pages/products/index/index.component';
 
 const routes: Routes = [
 	{
@@ -48,6 +49,16 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         component: UsersEditComponent
       }
+    ],
+	},
+  {
+		path: 'products',
+		children: [
+      {
+        path: '',
+        canActivate: [AuthGuard],
+        component: ProductsIndexComponent
+      },
     ],
 	},
 ];

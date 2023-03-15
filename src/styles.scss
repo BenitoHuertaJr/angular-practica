@@ -19,5 +19,33 @@ button {
 .no-drag {
     -webkit-app-region: no-drag;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html,
+body {
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+.table-container,
+.table-paginator-container {
+    overflow: auto;
+}
+
+.table-paginator-container {
+    margin-top: 10px;
+}
+
+table {
+    width: 100%;
+}
+
+.no-data {
+    display: flex;
+    justify-content: center;
+}
+
+.image-item {
+    width: 100px;
+    margin: 10px;
+}
