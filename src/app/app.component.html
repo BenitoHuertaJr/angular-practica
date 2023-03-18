@@ -1,4 +1,4 @@
-<ng-container *ngIf="currentUrl !== '/login'; then authenticate; else notauthenticated">
+<ng-container *ngIf="currentUrl !== '/login' && currentUrl !== '/'; then authenticate; else notauthenticated">
 </ng-container>
 
 <ng-template #notauthenticated>
