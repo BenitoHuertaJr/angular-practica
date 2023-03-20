@@ -3,7 +3,7 @@ mat-toolbar {
 }
 
 mat-sidenav {
-    width: 150px;
+    width: 180px;
     border-right: none;
     padding: 10px;
     text-align: center;
@@ -30,6 +30,12 @@ mat-sidenav-container {
     }
 }
 
+.brand-logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
 .avatar {
     margin-top: 16px;
     width: 100px;
@@ -43,8 +49,8 @@ mat-sidenav-container {
 }
 
 .designation {
-    margin-top: 2px;
-    font-size: 0.7rem;
+    margin-top: -15px;
+    font-size: 0.9rem;
     color: lightgrey;
 }
 
@@ -52,4 +58,8 @@ mat-divider {
     margin-top: 16px;
     margin-bottom: 16px;
     background-color: rgba(255, 255, 255, 0.5);
+}
+
+.example-spacer {
+    flex: 1 1 auto;
 }

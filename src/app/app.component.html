@@ -1,4 +1,4 @@
-<ng-container *ngIf="currentUrl !== '/login' && currentUrl !== '/'; then authenticate; else notauthenticated">
+<ng-container *ngIf="user; then authenticate; else notauthenticated">
 </ng-container>
 
 <ng-template #notauthenticated>
@@ -10,41 +10,76 @@
         <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
             <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
             <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
-        </button> Grocery App
+        </button>
+
+        <img class="brand-logo" src="https://ui-avatars.com/api/?background=random&size=512&name=Abarrotes Huerta" routerLink="/home" />
+
+        <span routerLink="/home">Abarrotes Huerta</span>
+
+        <span class="example-spacer"></span>
+
+        <button mat-icon-button *ngIf="showListOptions.add" (click)="redirectToAddPage()">
+            <mat-icon>add</mat-icon>
+        </button>
+
+        <button mat-icon-button *ngIf="showListOptions.reload">
+            <mat-icon>refresh</mat-icon>
+        </button>
     </mat-toolbar>
 
     <mat-sidenav-container>
-        <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
-            <img class="avatar mat-elevation-z8" [src]="user?.image_link" />
+        <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z1">
+            <img class="avatar mat-elevation-z1" [src]="user?.image_link" routerLink="/profile" />
 
-            <h4 class="name">{{ user?.name }}</h4>
-            <!-- <p class="designation">Software Engineer</p> -->
+            <h4 class="name" routerLink="/profile">{{ user?.name }}</h4>
+            <p class="designation" routerLink="/profile">Cajero</p>
 
             <mat-divider></mat-divider>
 
             <button mat-button class="menu-button" routerLink="/home">
                 <mat-icon>home</mat-icon>
-                <span>Home</span>
-            </button>
-            <button mat-button class="menu-button" routerLink="/users">
-                <mat-icon>people</mat-icon>
-                <span>Users</span>
+                <span>Inicio</span>
             </button>
             <button mat-button class="menu-button" routerLink="/products">
                 <mat-icon>store</mat-icon>
-                <span>Products</span>
-            </button>
-            <button mat-button class="menu-button" (click)="logout()">
-                <mat-icon>logout</mat-icon>
-                <span>Logout</span>
+                <span>Productos</span>
             </button>
 
-            <!-- <mat-divider></mat-divider>
-    
-            <button mat-button class="menu-button" routerLink="/help">
-                <mat-icon>help</mat-icon>
-                <span>Help</span>
-            </button> -->
+            <button mat-button class="menu-button" routerLink="/purchases">
+                <mat-icon>store</mat-icon>
+                <span>Compras</span>
+            </button>
+            <button mat-button class="menu-button" routerLink="/providers">
+                <mat-icon>store</mat-icon>
+                <span>Proveedores</span>
+            </button>
+
+            <button mat-button class="menu-button" routerLink="/reports">
+                <mat-icon>bar_chart</mat-icon>
+                <span>Reportes</span>
+            </button>
+
+            <button mat-button class="menu-button" routerLink="/users">
+                <mat-icon>people</mat-icon>
+                <span>Usuarios</span>
+            </button>
+
+            <button mat-button class="menu-button" routerLink="/boxes">
+                <mat-icon>inbox</mat-icon>
+                <span>Cajas</span>
+            </button>
+
+            <mat-divider></mat-divider>
+
+            <button mat-button class="menu-button" routerLink="/preferences">
+                <mat-icon>settings</mat-icon>
+                <span>Preferencias</span>
+            </button>
+
+            <button mat-button class="menu-button" (click)="logout()">
+                <mat-icon>logout</mat-icon>
+                <span>Salir</span>
+            </button>
         </mat-sidenav>
         <mat-sidenav-content>
             <div class="content mat-elevation-z8">

@@ -4,28 +4,45 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgxElectronModule } from 'ngx-electron';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginComponent } from './pages/login/login.component';
-import { HomeComponent } from './pages/home/home.component';
-import { IndexComponent as UsersIndexComponent } from './pages/users/index/index.component';
-import { CreateComponent as UsersCreateComponent } from './pages/users/create/create.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
-import { ShowComponent } from './pages/users/show/show.component';
-import { EditComponent } from './pages/users/edit/edit.component';
 import { AngularMaterialModule } from './modules/angular-material/angular-material.module';
-import { IndexComponent } from './pages/products/index/index.component';
+
+// COMPONENTS
+
+import { HomeComponent } from './pages/home/home.component';
+import { LoginComponent } from './pages/login/login.component';
+import { CreateComponent as UsersCreateComponent } from './pages/users/create/create.component';
+import { IndexComponent as UsersIndexComponent } from './pages/users/index/index.component';
+import { ShowComponent as UsersShowComponent } from './pages/users/show/show.component';
+import { EditComponent as UsersEditComponent } from './pages/users/edit/edit.component';
+import { IndexComponent as ProductsIndexComponent } from './pages/products/index/index.component';
+import { IndexComponent as BoxesIndexComponent } from './pages/boxes/index/index.component';
+import { IndexComponent as ProvidersIndexComponent } from './pages/providers/index/index.component';
+import { IndexComponent as PurchasesIndexComponent } from './pages/purchases/index/index.component';
+import { PreferencesComponent } from './pages/preferences/preferences.component';
+import { ReportsComponent } from './pages/reports/reports.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { IntroComponent } from './pages/intro/intro.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     HomeComponent,
-    UsersIndexComponent,
+    LoginComponent,
     UsersCreateComponent,
-    ShowComponent,
-    EditComponent,
-    IndexComponent
+    UsersIndexComponent,
+    UsersShowComponent,
+    UsersEditComponent,
+    ProductsIndexComponent,
+    BoxesIndexComponent,
+    ProvidersIndexComponent,
+    PurchasesIndexComponent,
+    PreferencesComponent,
+    ReportsComponent,
+    ProfileComponent,
+    IntroComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,8 +50,8 @@ import { IndexComponent } from './pages/products/index/index.component';
     BrowserAnimationsModule,
     HttpClientModule,
     NgxElectronModule,
-    ReactiveFormsModule, 
-		FormsModule,
+    ReactiveFormsModule,
+    FormsModule,
     AngularMaterialModule
   ],
   providers: [
