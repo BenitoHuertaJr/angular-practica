@@ -12,6 +12,7 @@ import { map, catchError, switchMap, finalize } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { StorageService } from './storage.service';
 import Swal from 'sweetalert2';
+import { ElectronService } from './electron.service';
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
@@ -19,7 +20,8 @@ export class AuthInterceptorService implements HttpInterceptor {
   protected url = environment.apiBaseUrl;
 
   constructor(
-    private storage: StorageService
+    private storage: StorageService,
+    private electronService: ElectronService
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -51,19 +53,18 @@ export class AuthInterceptorService implements HttpInterceptor {
           return next.handle(request).pipe(
             map((event: HttpEvent<any>) => {
               if (event instanceof HttpResponse) {
-                // do nothing for now
+                Swal.close();
               }
               return event;
             }),
             catchError((error: HttpErrorResponse) => {
 
+              Swal.close();
+              
               let message = this.getErrorsValidationMessage(error);
               this.presentAlert(message);
               return throwError(() => new Error(message));
 
-            }),
-            finalize(() => {
-              Swal.close();
             })
           );
         })
@@ -71,7 +72,7 @@ export class AuthInterceptorService implements HttpInterceptor {
   }
 
   async presentAlert(message: string) {
-    alert(message);
+    this.electronService.error(message);
   }
 
   getErrorsValidationMessage(res: HttpErrorResponse): any {
@@ -103,15 +104,15 @@ export class AuthInterceptorService implements HttpInterceptor {
 
         if (Array.isArray(obj[key])) {
 
-          message += '<ul class="alert-error-list">';
+          // message += '<ul class="alert-error-list">';
 
           let errors = obj[key];
 
           errors.forEach((det: string) => {
-            message += '<li>' + det + '</li>';
+            message += det + '\n';
           });
 
-          message += '</ul>';
+          // message += '</ul>';
 
         } else {
           return res.error.message;

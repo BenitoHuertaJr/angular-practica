@@ -106,14 +106,12 @@ export class IndexComponent implements OnInit {
 
   deleteUser(id: any) {
     this.electronService.confirm('Eliminar usuario', '¿Estás seguro? No se podrán revertir los cambios').then(confirm => {
-      console.log('confirm', confirm);
-      if(confirm) {
-        
-        // this.userService.delete(id).subscribe({
-        //   next: () => {
-        //     this.refreshUsers();
-        //   }
-        // });
+      if (confirm) {
+        this.userService.delete(id).subscribe({
+          next: () => {
+            this.refreshUsers();
+          }
+        });
       }
     });
   }

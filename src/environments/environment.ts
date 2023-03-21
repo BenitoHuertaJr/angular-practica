@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://abarrotes.benitohuerta.site'
+  apiBaseUrl: 'https://tester-abarrotes.benitohuerta.site'
 };
 

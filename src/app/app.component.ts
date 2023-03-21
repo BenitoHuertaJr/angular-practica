@@ -9,6 +9,7 @@ import { User } from './models/User';
 import { AuthenticationService } from './services/authentication.service';
 import { ElectronService } from './services/electron.service';
 import { Title } from '@angular/platform-browser';
+import { Location } from '@angular/common';
 
 @UntilDestroy()
 @Component({
@@ -27,7 +28,8 @@ export class AppComponent {
   showListOptions: ListOptions = {
     add: false,
     search: false,
-    reload: false
+    reload: false,
+    back: false
   };
 
   constructor(
@@ -36,7 +38,8 @@ export class AppComponent {
     private authService: AuthenticationService,
     private electronService: ElectronService,
     private activatedRoute: ActivatedRoute,
-    private titleService: Title
+    private titleService: Title,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -85,7 +88,8 @@ export class AppComponent {
           this.showListOptions = {
             add: false,
             search: false,
-            reload: false
+            reload: false,
+            back: false
           }
         }
       }
@@ -94,6 +98,10 @@ export class AppComponent {
 
   redirectToAddPage() {
     this.router.navigateByUrl(this.currentUrl + '/create');
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   routerChange(url: string) {

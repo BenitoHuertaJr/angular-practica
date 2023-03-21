@@ -18,6 +18,10 @@
 
         <span class="example-spacer"></span>
 
+        <button mat-icon-button *ngIf="showListOptions.back" (click)="goBack()" matTooltip="Regresar">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+
         <button mat-icon-button *ngIf="showListOptions.add" (click)="redirectToAddPage()" matTooltip="Agregar nuevo">
             <mat-icon>add</mat-icon>
         </button>

@@ -6,7 +6,7 @@ import { HttpService } from './http.service';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService extends CrudService<Role> {
+export class RoleService extends CrudService<Role> {
 
   constructor(
     http: HttpService

@@ -78,6 +78,34 @@ export class ElectronService {
     return confirmation;
   }
 
+  alert(title: string, message: string): void {
+    if (this.isElectronApp()) {
+      alert(`${title}\n${message}`);
+    } else {
+      Swal.fire({
+        title: title,
+        text: message,
+        icon: 'info',
+        showCancelButton: false,
+        confirmButtonText: 'Ok',
+      });
+    }
+  }
+
+  error(message: string): void {
+    if (this.isElectronApp()) {
+      alert(`${message}`);
+    } else {
+      Swal.fire({
+        title: '¡Oops! Algo salió mal',
+        text: message,
+        icon: 'error',
+        showCancelButton: false,
+        confirmButtonText: 'Ok',
+      });
+    }
+  }
+
   // showErrorBox(title: string, content: string): void {
   //   let dialog = this.electronService.remote.dialog;
   //   dialog.showErrorBox(title, content);

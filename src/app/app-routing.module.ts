@@ -111,7 +111,13 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         component: UsersCreateComponent,
         data: {
-          title: 'Agregar nuevo usuario'
+          title: 'Agregar nuevo usuario',
+          showListOptions: {
+            search: false,
+            add: false,
+            reload: false,
+            back: true
+          }
         }
       },
       {
@@ -119,7 +125,13 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         component: UsersShowComponent,
         data: {
-          title: 'Información del usuario'
+          title: 'Información del usuario',
+          showListOptions: {
+            search: false,
+            add: false,
+            reload: false,
+            back: true
+          }
         }
       },
       {
@@ -127,7 +139,13 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         component: UsersEditComponent,
         data: {
-          title: 'Actualizar información del usuario'
+          title: 'Actualizar información del usuario',
+          showListOptions: {
+            search: false,
+            add: false,
+            reload: false,
+            back: true
+          }
         }
       }
     ],
