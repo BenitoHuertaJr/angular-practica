@@ -33,30 +33,19 @@ export class ElectronService {
     this.ipcRender.on(channel, (evt, args) => listener(evt, args));
   }
 
-  showMessageBox(options: MessageBoxOptions) {
-
-    if (this.isElectronApp()) {
-      this.send('showMessageBox', options);
-    } else {
-      Swal.fire({
-        title: options.title,
-        text: options.message
-      });
-    }
-
-  }
-
   async confirm(title: string, message: string): Promise<boolean> {
 
     let confirmation: boolean = false;
 
     if (this.isElectronApp()) {
 
-      let alertConfirm = await confirm(`${title}\n${message}`);
+      return new Promise(resolve => {
+        this.send('showConfirmBox', { title, message, buttons: ['Si', 'No'] });
+        this.on('showConfirmBoxResponse', (_event: any, result: any) => {
+          resolve(result);
+        });
+      });
 
-      if (alertConfirm == true) {
-         confirmation = true;
-      }
     } else {
 
       await Swal.fire({
@@ -80,7 +69,12 @@ export class ElectronService {
 
   alert(title: string, message: string): void {
     if (this.isElectronApp()) {
-      alert(`${title}\n${message}`);
+
+      this.send('showMessageBox', {
+        title,
+        message
+      });
+
     } else {
       Swal.fire({
         title: title,
@@ -94,7 +88,11 @@ export class ElectronService {
 
   error(message: string): void {
     if (this.isElectronApp()) {
-      alert(`${message}`);
+      this.send('showMessageBox', {
+        title: '¡Ups! Algo salió mal',
+        message,
+        type: 'error'
+      });
     } else {
       Swal.fire({
         title: '¡Oops! Algo salió mal',
@@ -105,9 +103,4 @@ export class ElectronService {
       });
     }
   }
-
-  // showErrorBox(title: string, content: string): void {
-  //   let dialog = this.electronService.remote.dialog;
-  //   dialog.showErrorBox(title, content);
-  // }
 }

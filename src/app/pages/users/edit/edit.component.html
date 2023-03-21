@@ -1,1 +1,25 @@
-<p>edit works!</p>
+<form [formGroup]="form" (ngSubmit)="update()">
+    <div class="form-container">
+        <div class="form-body">
+            <mat-form-field class="justifier">
+                <input matInput placeholder="Nombre" formControlName="name">
+                <mat-error *ngIf="(name?.dirty || name?.touched) && name?.errors && name?.errors?.['required']">
+                    Email is required
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="justifier">
+                <input matInput placeholder="Email" formControlName="email">
+                <mat-error *ngIf="(email?.dirty || email?.touched) && email?.errors && email?.errors?.['email']">
+                    Please enter a valid email address
+                </mat-error>
+                <mat-error *ngIf="(email?.dirty || email?.touched) && email?.errors && email?.errors?.['required']">
+                    Email is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form-footer">
+            <button mat-raised-button color="primary" [disabled]="!form.valid">Actualizar</button>
+        </div>
+    </div>
+</form>

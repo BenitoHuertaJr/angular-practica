@@ -36,7 +36,9 @@ export class CreateComponent implements OnInit {
     this.userService.create(this.form.value).subscribe({
       next: () => {
         this.electronService.alert('Creado', 'Se ha agregado un nuevo usuario');
-        this.router.navigateByUrl('/users');
+        setTimeout(() => {
+          this.router.navigateByUrl('/users');
+        }, 3000);
       }
     });
   }

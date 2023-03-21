@@ -8,7 +8,7 @@ import {
   HttpErrorResponse
 } from '@angular/common/http';
 import { Observable, throwError, from } from 'rxjs';
-import { map, catchError, switchMap, finalize } from 'rxjs/operators';
+import { map, catchError, switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { StorageService } from './storage.service';
 import Swal from 'sweetalert2';
@@ -104,15 +104,11 @@ export class AuthInterceptorService implements HttpInterceptor {
 
         if (Array.isArray(obj[key])) {
 
-          // message += '<ul class="alert-error-list">';
-
           let errors = obj[key];
 
           errors.forEach((det: string) => {
-            message += det + '\n';
+            message += '• ' + det + '\n';
           });
-
-          // message += '</ul>';
 
         } else {
           return res.error.message;

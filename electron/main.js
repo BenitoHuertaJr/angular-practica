@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, Menu, ipcMain, dialog, remote } = require("electron");
+const { app, BrowserWindow, Menu, ipcMain, ipcRenderer, dialog, remote } = require("electron");
 const path = require("path");
 const { is } = require('electron-util');
 const menu = require('./menu');
@@ -15,7 +15,26 @@ ipcMain.on('unmaximize-main-window', () => {
 });
 
 ipcMain.on('showMessageBox', (event, options) => {
-    dialog.showMessageBox(options);
+    dialog.showMessageBox(mainWindow, options[0]);
+});
+
+ipcMain.on('showConfirmBox', (event, options) => {
+    dialog.showMessageBox(mainWindow, {
+        type: 'warning',
+        title: options[0].title,
+        message: options[0].message,
+        buttons: options[0].buttons
+    }).then((result) => {
+
+        if (result.response !== 0) {
+            event.sender.send('showConfirmBoxResponse', false);
+            return;
+        }
+
+        if (result.response === 0) {
+            event.sender.send('showConfirmBoxResponse', true);
+        }
+    });
 });
 
 function createWindow() {
