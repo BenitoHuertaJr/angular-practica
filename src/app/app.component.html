@@ -18,12 +18,12 @@
 
         <span class="example-spacer"></span>
 
-        <button mat-icon-button *ngIf="showListOptions.add" (click)="redirectToAddPage()">
+        <button mat-icon-button *ngIf="showListOptions.add" (click)="redirectToAddPage()" matTooltip="Agregar nuevo">
             <mat-icon>add</mat-icon>
         </button>
 
-        <button mat-icon-button *ngIf="showListOptions.reload">
-            <mat-icon>refresh</mat-icon>
+        <button mat-icon-button *ngIf="showListOptions.reload" matTooltip="Recargar">
+            <mat-icon>cached</mat-icon>
         </button>
     </mat-toolbar>
 
@@ -46,11 +46,11 @@
             </button>
 
             <button mat-button class="menu-button" routerLink="/purchases">
-                <mat-icon>store</mat-icon>
+                <mat-icon>shopping_cart</mat-icon>
                 <span>Compras</span>
             </button>
             <button mat-button class="menu-button" routerLink="/providers">
-                <mat-icon>store</mat-icon>
+                <mat-icon>face</mat-icon>
                 <span>Proveedores</span>
             </button>
 

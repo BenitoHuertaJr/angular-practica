@@ -143,16 +143,16 @@ export class AppComponent {
   }
 
   logout(): void {
-    let text = "Are you sure you want to logout?";
-    if (confirm(text) == true) {
-
-      this.authService.logout().subscribe({
-        next: (res) => {
-          this.user = null;
-          this.electronService.send('unmaximize-main-window');
-          this.router.navigateByUrl('/login', { replaceUrl: true });
-        }
-      });
-    }
+    this.electronService.confirm('Cerrar sesión', '¿Estás seguro de salir?').then(confirm => {
+      if (confirm) {
+        this.authService.logout().subscribe({
+          next: () => {
+            this.user = null;
+            this.electronService.send('unmaximize-main-window');
+            this.router.navigateByUrl('/login', { replaceUrl: true });
+          }
+        });
+      }
+    });
   }
 }

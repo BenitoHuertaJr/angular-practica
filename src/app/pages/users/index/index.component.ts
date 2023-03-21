@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { PaginationParams } from 'src/app/interfaces/PaginationParams';
 import { User } from 'src/app/models/User';
 import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
+import { ElectronService } from 'src/app/services/electron.service';
 
 @Component({
   selector: 'app-index',
@@ -33,7 +35,9 @@ export class IndexComponent implements OnInit {
   loading: boolean = false;
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private router: Router,
+    private electronService: ElectronService
   ) { }
 
   ngOnInit() {
@@ -87,12 +91,30 @@ export class IndexComponent implements OnInit {
     this.getUsers();
   }
 
-  refreshSales() {
+  refreshUsers() {
     this.pageIndex = 0;
     this.pageSize = 10;
     this.sortBy = '';
     this.sortDirection = '';
 
     this.getUsers();
+  }
+
+  goToEditPage(id: any) {
+    this.router.navigateByUrl('/users/' + id + '/edit');
+  }
+
+  deleteUser(id: any) {
+    this.electronService.confirm('Eliminar usuario', '¿Estás seguro? No se podrán revertir los cambios').then(confirm => {
+      console.log('confirm', confirm);
+      if(confirm) {
+        
+        // this.userService.delete(id).subscribe({
+        //   next: () => {
+        //     this.refreshUsers();
+        //   }
+        // });
+      }
+    });
   }
 }

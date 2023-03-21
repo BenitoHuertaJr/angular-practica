@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BrowserWindow, IpcRenderer, MessageBoxOptions, dialog as ElectronDialog } from 'electron';
 import { ElectronService as NgxElectronService } from 'ngx-electron';
-import { of } from 'rxjs';
+import { of, Observable, from } from 'rxjs';
 import Swal, { SweetAlertOptions } from 'sweetalert2';
 
 @Injectable({
@@ -43,7 +43,39 @@ export class ElectronService {
         text: options.message
       });
     }
-  
+
+  }
+
+  async confirm(title: string, message: string): Promise<boolean> {
+
+    let confirmation: boolean = false;
+
+    if (this.isElectronApp()) {
+
+      let alertConfirm = await confirm(`${title}\n${message}`);
+
+      if (alertConfirm == true) {
+         confirmation = true;
+      }
+    } else {
+
+      await Swal.fire({
+        title: title,
+        text: message,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          confirmation = true;
+        }
+      });
+    }
+
+    return confirmation;
   }
 
   // showErrorBox(title: string, content: string): void {
